@@ -1,0 +1,112 @@
+name: Documentation CI/CD
+
+# ============================================================
+# TRIGGERS
+# ============================================================
+# 1. pull_request → roda o build para validar ANTES do merge
+# 2. push na main → build + deploy após o merge do PR
+# 3. schedule     → rebuild semanal automático (domingo 00:00 UTC)
+on:
+  pull_request:
+    branches:
+      - main
+
+  push:
+    branches:
+      - main
+
+  schedule:
+    - cron: '0 0 * * 0'  # Todo domingo à meia-noite UTC
+
+# ============================================================
+# PERMISSÕES para GitHub Pages
+# ============================================================
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Evita deploys simultâneos no GitHub Pages
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+# ============================================================
+# JOB 1: BUILD (Validação + Geração do site)
+# ============================================================
+jobs:
+  build_site:
+    runs-on: ubuntu-latest
+
+    # --- Matrix Strategy ---
+    # Testa o build em duas versões do Python para garantir
+    # que o site gera sem erros em ambientes diferentes.
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11']
+
+    steps:
+      # 1. Checkout do código
+      - name: Checkout do repositório
+        uses: actions/checkout@v5
+
+      # 2. Configurar Python (versão da matrix)
+      - name: Configurar Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # 3. Cache das dependências pip
+      # Salva os pacotes instalados para não baixar tudo de novo
+      # em cada execução — acelera o pipeline.
+      - name: Cache de dependências pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            pip-${{ runner.os }}-${{ matrix.python-version }}-
+
+      # 4. Instalar dependências
+      - name: Instalar Zensical
+        run: pip install zensical
+
+      # 5. Configurar GitHub Pages
+      - name: Configurar Pages
+        uses: actions/configure-pages@v5
+
+      # 6. Build do site
+      - name: Build do site
+        run: zensical build --clean
+
+      # 7. Upload do artefato (só na versão principal da matrix)
+      # Só precisamos do artefato de UMA versão para o deploy.
+      # Usamos a 3.11 como "principal".
+      - name: Upload do artefato do site
+        if: matrix.python-version == '3.11'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  # ============================================================
+  # JOB 2: DEPLOY (Publicação no GitHub Pages)
+  # ============================================================
+  deploy_site:
+    runs-on: ubuntu-latest
+
+    # Só roda DEPOIS do build terminar com sucesso
+    needs: build_site
+
+    # --- Condicional de Segurança ---
+    # NUNCA faz deploy durante um Pull Request.
+    # Só deploya no push para main OU no schedule semanal.
+    if: github.event_name == 'push' || github.event_name == 'schedule'
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

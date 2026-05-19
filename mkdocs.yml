@@ -1,0 +1,51 @@
+site_name: Documentação Go
+site_url: ""
+site_description: Documentação da linguagem Go — CTT AP2
+site_author: Equipe CTT
+
+theme:
+  name: material
+  language: pt-BR
+  palette:
+    - scheme: default
+      primary: cyan
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Modo escuro
+    - scheme: slate
+      primary: cyan
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Modo claro
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+
+nav:
+  - Início: index.md
+  - Introdução e Instalação: introducao-instalacao.md
+  - Sintaxe Básica e Variáveis: sintaxe-variaveis.md
+  - Estruturas de Controle: estruturas-controle.md
+  - Arrays, Slices e Maps: arrays-slices-maps.md
+  - Structs e Métodos: structs-metodos.md
+  - Tratamento de Erros: tratamento-erros.md
+  - "Concorrência I: Goroutines": goroutines.md
+  - "Concorrência II: Channels": channels.md
+  - Gerenciamento de Pacotes: go-modules.md
+  - Testes Automatizados: testes.md
+
+markdown_extensions:
+  # Syntax highlighting nos blocos de código
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+
+  # Admonitions (blocos de nota, aviso, dica)
+  - admonition
+  - pymdownx.details
+
+  # Tabelas
+  - tables
