@@ -1,0 +1,21 @@
+# MkDocs
+site/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+
+# Logs / env
+*.log
+.env
+.env.*
