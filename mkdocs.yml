@@ -28,12 +28,12 @@ nav:
   - Introdução e Instalação: introducao-instalacao.md
   - Sintaxe Básica e Variáveis: sintaxe-variaveis.md
   - Estruturas de Controle: estruturas-controle.md
-  # - Arrays, Slices e Maps: arrays-slices-maps.md
-  # - Structs e Métodos: structs-metodos.md
+  - Arrays, Slices e Maps: arrays-slices-maps.md
+  - Structs e Métodos: structs-metodos.md
   # - Tratamento de Erros: tratamento-erros.md
   # - "Concorrência I: Goroutines": goroutines.md
   # - "Concorrência II: Channels": channels.md
-  # - Gerenciamento de Pacotes: go-modules.md
+  - Gerenciamento de Pacotes: go-modules.md
   # - Testes Automatizados: testes.md
 
 markdown_extensions:
