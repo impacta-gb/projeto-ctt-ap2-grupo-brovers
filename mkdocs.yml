@@ -32,9 +32,9 @@ nav:
   - Structs e Métodos: structs-metodos.md
   # - Tratamento de Erros: tratamento-erros.md
   # - "Concorrência I: Goroutines": goroutines.md
-  # - "Concorrência II: Channels": channels.md
+  - "Concorrência II: Channels": channels.md
   - Gerenciamento de Pacotes: go-modules.md
-  # - Testes Automatizados: testes.md
+  - Testes Automatizados: testes.md
 
 markdown_extensions:
   # Syntax highlighting nos blocos de código
