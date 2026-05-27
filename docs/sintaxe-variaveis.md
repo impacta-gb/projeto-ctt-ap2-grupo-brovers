@@ -1,6 +1,10 @@
-## Sintaxe Básica e Variáveis
+# Sintaxe Básica e Variáveis
 
-### Declaração de variáveis
+Go tem uma sintaxe enxuta e poucas palavras-chave. Esta página cobre as formas de declarar variáveis, os tipos primitivos da linguagem, constantes e a conversão explícita entre tipos.
+
+---
+
+## Declaração de variáveis
 
 Go oferece duas formas principais de declarar variáveis:
 
@@ -22,21 +26,22 @@ func main() {
 }
 ```
 
-> [!NOTE] O operador `:=` (short variable declaration) só pode ser usado **dentro de funções**. Para variáveis no escopo do pacote, use `var`.
+!!! note
+    O operador `:=` (short variable declaration) só pode ser usado **dentro de funções**. Para variáveis no escopo do pacote, use `var`.
 
-### Tipos primitivos
+## Tipos primitivos
 
-|Tipo|Exemplo de valor|Descrição|
+| Tipo | Exemplo de valor | Descrição |
 |---|---|---|
-|`int`|`42`, `-7`|Inteiro (tamanho depende da plataforma)|
-|`int8` … `int64`|`127`, `-128`|Inteiros com tamanho fixo|
-|`uint`|`0`, `255`|Inteiro sem sinal|
-|`float32`|`3.14`|Ponto flutuante de 32 bits|
-|`float64`|`3.141592653`|Ponto flutuante de 64 bits (padrão)|
-|`string`|`"Olá, Go!"`|Sequência de bytes UTF-8|
-|`bool`|`true`, `false`|Valor booleano|
-|`byte`|`'A'`|Alias para `uint8`|
-|`rune`|`'ã'`|Alias para `int32`, representa um caractere Unicode|
+| `int` | `42`, `-7` | Inteiro (tamanho depende da plataforma) |
+| `int8` … `int64` | `127`, `-128` | Inteiros com tamanho fixo |
+| `uint` | `0`, `255` | Inteiro sem sinal |
+| `float32` | `3.14` | Ponto flutuante de 32 bits |
+| `float64` | `3.141592653` | Ponto flutuante de 64 bits (padrão) |
+| `string` | `"Olá, Go!"` | Sequência de bytes UTF-8 |
+| `bool` | `true`, `false` | Valor booleano |
+| `byte` | `'A'` | Alias para `uint8` |
+| `rune` | `'ã'` | Alias para `int32`, representa um caractere Unicode |
 
 ```go
 package main
@@ -56,7 +61,7 @@ func main() {
 }
 ```
 
-### Constantes
+## Constantes
 
 Constantes são declaradas com `const` e não podem ser alteradas após a definição:
 
@@ -99,7 +104,7 @@ func main() {
 }
 ```
 
-### Conversão de tipos
+## Conversão de tipos
 
 Go é **estritamente tipado** — não há conversão implícita entre tipos. Você deve converter explicitamente:
 
@@ -119,7 +124,5 @@ func main() {
 }
 ```
 
-> [!WARNING] Converter `float64` para `int` **trunca** a parte decimal — `int(3.99)` resulta em `3`, não em `4`. Cuidado com perdas de precisão em cálculos financeiros ou científicos.
-
----
-
+!!! warning
+    Converter `float64` para `int` **trunca** a parte decimal — `int(3.99)` resulta em `3`, não em `4`. Cuidado com perdas de precisão em cálculos financeiros ou científicos.

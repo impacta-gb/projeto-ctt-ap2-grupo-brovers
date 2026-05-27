@@ -38,8 +38,8 @@ func main() {
 }
 ```
 
-> [!NOTE]
-> Quando não há erro, a função retorna `nil` no lugar do `error`. O padrão `if err != nil` é a forma idiomática de checar erros em Go — você vai vê-lo em praticamente todo código Go real.
+!!! note
+    Quando não há erro, a função retorna `nil` no lugar do `error`. O padrão `if err != nil` é a forma idiomática de checar erros em Go — você vai vê-lo em praticamente todo código Go real.
 
 ---
 
@@ -174,5 +174,5 @@ func main() {
 }
 ```
 
-> [!WARNING]
-> Não use `panic` como substituto para tratamento de erros comum. Em Go, a convenção é retornar `error` para situações esperadas (arquivo não encontrado, entrada inválida) e reservar `panic` apenas para falhas que indicam bugs no próprio código. O uso excessivo de `panic`/`recover` é considerado má prática.
+!!! warning
+    Não use `panic` como substituto para tratamento de erros comum. Em Go, a convenção é retornar `error` para situações esperadas (arquivo não encontrado, entrada inválida) e reservar `panic` apenas para falhas que indicam bugs no próprio código. O uso excessivo de `panic`/`recover` é considerado má prática.

@@ -1,19 +1,14 @@
-# Structs e Métodos em Go
+# Structs e Métodos
 
-## Introdução
-
-Em Go, `structs` são estruturas utilizadas para agrupar diferentes tipos de dados em um único objeto.
-Já os métodos permitem associar comportamentos a essas estruturas, deixando o código mais organizado e reutilizável.
+Em Go, `structs` agrupam diferentes tipos de dados em um único valor, e os **métodos** associam comportamentos a esses tipos. Juntos, eles são a base para organizar dados e lógica de forma limpa e reutilizável — sem precisar de classes ou herança.
 
 ---
 
-# Structs em Go
+## Structs
 
-## O que é uma Struct?
+Uma `struct` é um tipo composto que agrupa campos (variáveis) sob um único nome.
 
-Uma `struct` é um tipo composto que agrupa variáveis sob um único nome.
-
-## Exemplo básico
+### Exemplo básico
 
 ```go
 package main
@@ -36,27 +31,18 @@ func main() {
 }
 ```
 
----
+### Acessando e alterando campos
 
-## Acessando campos da Struct
-
-Os campos podem ser acessados usando ponto (`.`).
+Os campos são acessados com ponto (`.`) e podem ser lidos ou alterados:
 
 ```go
-fmt.Println(p.Nome)
+fmt.Println(p.Nome) // leitura
+p.Idade = 23        // alteração
 ```
 
-Também é possível alterar valores:
+### Struct anônima
 
-```go
-p.Idade = 23
-```
-
----
-
-## Struct Anônima
-
-Go permite criar structs sem definir um tipo separado.
+Go permite criar uma struct sem definir um tipo nomeado separado, útil para valores pontuais:
 
 ```go
 usuario := struct {
@@ -70,13 +56,11 @@ usuario := struct {
 
 ---
 
-# Métodos em Go
+## Métodos
 
-## O que é um Método?
+Um método é uma função associada a uma struct. O valor entre parênteses antes do nome do método é o **receiver**, que indica a qual tipo o método pertence.
 
-Um método é uma função associada a uma struct.
-
-## Sintaxe
+### Sintaxe
 
 ```go
 func (variavel Tipo) NomeMetodo() {
@@ -84,9 +68,7 @@ func (variavel Tipo) NomeMetodo() {
 }
 ```
 
----
-
-## Exemplo de Método
+### Exemplo de método
 
 ```go
 package main
@@ -109,24 +91,9 @@ func main() {
 
 ---
 
-# Receiver em Métodos
+## Métodos com ponteiros
 
-O valor entre parênteses antes do nome do método é chamado de `receiver`.
-
-```go
-func (p Pessoa) Metodo() {
-}
-```
-
-O receiver indica qual tipo possui aquele método.
-
----
-
-# Métodos com Ponteiros
-
-Quando queremos alterar os dados da struct original, usamos ponteiros.
-
-## Exemplo
+Por padrão, um receiver recebe uma **cópia** da struct, então alterações não afetam o valor original. Quando o método precisa modificar a struct, use um receiver do tipo ponteiro (`*Tipo`):
 
 ```go
 package main
@@ -143,47 +110,33 @@ func (c *Conta) Depositar(valor float64) {
 
 func main() {
     conta := Conta{Saldo: 100}
-
     conta.Depositar(50)
-
     fmt.Println(conta.Saldo)
 }
 ```
 
-### Saída
-
-```txt
+```text
 150
 ```
 
----
-
-# Diferença entre Receiver Normal e Ponteiro
-
-| Tipo | Comportamento |
+| Tipo de receiver | Comportamento |
 |---|---|
-| Receiver normal | Trabalha com cópia |
-| Receiver ponteiro | Altera o objeto original |
+| Receiver por valor (`Tipo`) | Trabalha com uma cópia; não altera o original |
+| Receiver por ponteiro (`*Tipo`) | Altera o objeto original |
+
+!!! note
+    Por convenção, se **algum** método de um tipo usa receiver por ponteiro, normalmente todos usam, para manter a consistência.
+
+## Quando usar
+
+- Use **structs** para agrupar informações relacionadas, representar entidades do mundo real e organizar dados complexos.
+- Use **métodos** quando o comportamento pertence ao próprio dado, para deixar o código mais limpo e reutilizável.
 
 ---
 
-# Boas Práticas
+## Exemplo completo
 
-## Use Structs quando:
-
-- Precisar agrupar informações relacionadas
-- Representar objetos do mundo real
-- Organizar dados complexos
-
-## Use Métodos quando:
-
-- O comportamento pertence ao objeto
-- Desejar código mais limpo
-- Precisar reutilizar funcionalidades
-
----
-
-# Exemplo Completo
+O exemplo a seguir combina struct, método por valor (apenas lê) e método por ponteiro (altera o estado):
 
 ```go
 package main
@@ -221,10 +174,3 @@ func main() {
     player.ExibirStatus()
 }
 ```
-
----
-
-# Conclusão
-
-Structs e métodos são fundamentais em Go para organizar dados e comportamentos de forma eficiente.
-Eles ajudam na criação de aplicações mais limpas, reutilizáveis e fáceis de manter.

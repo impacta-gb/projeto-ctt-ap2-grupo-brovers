@@ -29,8 +29,8 @@ func main() {
 }
 ```
 
-> [!NOTE]
-> O operador `<-` indica a direção do dado: `ch <- valor` envia para o channel, e `valor := <-ch` recebe do channel.
+!!! note
+    O operador `<-` indica a direção do dado: `ch <- valor` envia para o channel, e `valor := <-ch` recebe do channel.
 
 ---
 
@@ -89,8 +89,8 @@ func main() {
 }
 ```
 
-> [!WARNING]
-> Enviar para um channel buffered cheio **bloqueia** a goroutine. Se nenhuma outra goroutine consumir, isso causa um **deadlock**.
+!!! warning
+    Enviar para um channel buffered cheio **bloqueia** a goroutine. Se nenhuma outra goroutine consumir, isso causa um **deadlock**.
 
 ### Comparação
 
@@ -129,8 +129,8 @@ func main() {
 }
 ```
 
-> [!NOTE]
-> Só quem **envia** deve fechar o channel. Fechar um channel já fechado causa **panic**. Enviar para um channel fechado também causa **panic**.
+!!! note
+    Só quem **envia** deve fechar o channel. Fechar um channel já fechado causa **panic**. Enviar para um channel fechado também causa **panic**.
 
 ---
 
@@ -206,8 +206,8 @@ func main() {
 }
 ```
 
-> [!NOTE]
-> `time.After(d)` retorna um channel que recebe um valor após a duração `d`. É o padrão idiomático para implementar timeouts com `select`.
+!!! note
+    `time.After(d)` retorna um channel que recebe um valor após a duração `d`. É o padrão idiomático para implementar timeouts com `select`.
 
 ---
 
@@ -226,8 +226,8 @@ func main() {
 
 Saída: `fatal error: all goroutines are asleep - deadlock!`
 
-> [!WARNING]
-> Deadlocks em channels geralmente acontecem por: (1) esquecer de lançar o produtor em uma goroutine separada, (2) fechar o channel no lugar errado, ou (3) desbalancear o número de envios e recebimentos em channels buffered.
+!!! warning
+    Deadlocks em channels geralmente acontecem por: (1) esquecer de lançar o produtor em uma goroutine separada, (2) fechar o channel no lugar errado, ou (3) desbalancear o número de envios e recebimentos em channels buffered.
 
 ---
 
@@ -299,5 +299,5 @@ func consumidor(ch <-chan int) { // só pode receber
 }
 ```
 
-> [!NOTE]
-> Restringir a direção (`chan<-` ou `<-chan`) torna o código mais seguro e autodocumentado. O compilador vai impedir operações na direção errada.
+!!! note
+    Restringir a direção (`chan<-` ou `<-chan`) torna o código mais seguro e autodocumentado. O compilador vai impedir operações na direção errada.
