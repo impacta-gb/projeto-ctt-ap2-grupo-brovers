@@ -1,312 +1,95 @@
-# Estudos de Go (Golang)
+# Gerenciamento de Pacotes
 
-==================================================
-ARRAYS, SLICES E MAPS
-==================================================
+O gerenciamento de pacotes em Go é feito pelo sistema oficial **Go Modules**, padrão desde a versão 1.16. Um *módulo* é um conjunto de pacotes versionados em conjunto, descrito por um arquivo `go.mod` na raiz do projeto. Com ele, o Go controla quais dependências o projeto usa e em quais versões.
 
-# Arrays
+---
 
-Arrays são estruturas de tamanho fixo que armazenam elementos do mesmo tipo.
+## Inicializando um módulo
 
-Exemplo:
-
-```go
-package main
-
-import "fmt"
-
-func main() {
-
-    numeros := [5]int{1, 2, 3, 4, 5}
-
-    fmt.Println(numeros)
-}
-```
-
-Características:
-
-- Tamanho fixo
-- Mesmo tipo de dado
-- Índices começam em 0
-
-Acessando posições:
-
-```go
-fmt.Println(numeros[0])
-```
-
-Alterando valores:
-
-```go
-numeros[1] = 10
-```
-
---------------------------------------------------
-
-# Slices
-
-Slices são estruturas dinâmicas baseadas em arrays.
-
-Exemplo:
-
-```go
-package main
-
-import "fmt"
-
-func main() {
-
-    nomes := []string{"Ana", "Carlos", "Maria"}
-
-    fmt.Println(nomes)
-}
-```
-
-Adicionando elementos:
-
-```go
-nomes = append(nomes, "João")
-```
-
-Tamanho do slice:
-
-```go
-fmt.Println(len(nomes))
-```
-
-Capacidade do slice:
-
-```go
-fmt.Println(cap(nomes))
-```
-
-Criando slices com make:
-
-```go
-numeros := make([]int, 5)
-```
-
---------------------------------------------------
-
-# Maps
-
-Maps armazenam dados em formato chave-valor.
-
-Exemplo:
-
-```go
-package main
-
-import "fmt"
-
-func main() {
-
-    aluno := map[string]string{
-        "nome": "Carlos",
-        "curso": "ADS",
-    }
-
-    fmt.Println(aluno)
-}
-```
-
-Acessando valores:
-
-```go
-fmt.Println(aluno["nome"])
-```
-
-Adicionando elementos:
-
-```go
-aluno["idade"] = "22"
-```
-
-Removendo elementos:
-
-```go
-delete(aluno, "idade")
-```
-
-==================================================
-STRUCTS E MÉTODOS
-==================================================
-
-# Structs
-
-Structs são estruturas usadas para agrupar diferentes tipos de dados.
-
-Exemplo:
-
-```go
-package main
-
-import "fmt"
-
-type Pessoa struct {
-    Nome  string
-    Idade int
-}
-
-func main() {
-
-    p := Pessoa{
-        Nome:  "Carlos",
-        Idade: 22,
-    }
-
-    fmt.Println(p)
-}
-```
-
-Acessando atributos:
-
-```go
-fmt.Println(p.Nome)
-```
-
-Alterando atributos:
-
-```go
-p.Idade = 23
-```
-
---------------------------------------------------
-
-# Métodos
-
-Métodos são funções associadas a structs.
-
-Exemplo:
-
-```go
-package main
-
-import "fmt"
-
-type Pessoa struct {
-    Nome string
-}
-
-func (p Pessoa) Apresentar() {
-    fmt.Println("Olá, meu nome é", p.Nome)
-}
-
-func main() {
-
-    pessoa := Pessoa{Nome: "Carlos"}
-
-    pessoa.Apresentar()
-}
-```
-
-Método com retorno:
-
-```go
-func (p Pessoa) Saudacao() string {
-    return "Olá " + p.Nome
-}
-```
-
-Método com ponteiro:
-
-```go
-func (p *Pessoa) FazerAniversario() {
-    p.Idade++
-}
-```
-
-==================================================
-GERENCIAMENTO DE PACOTES
-==================================================
-
-# Introdução
-
-O gerenciamento de pacotes em Go é responsável por organizar, instalar e controlar dependências utilizadas em projetos.
-
-A linguagem Go possui um sistema chamado Go Modules.
-
---------------------------------------------------
-
-# Inicializando um módulo
+O comando `go mod init` cria o arquivo `go.mod` e define o **caminho do módulo** (module path), que é o identificador de importação do projeto:
 
 ```bash
-go mod init nome-do-projeto
+go mod init github.com/usuario/api-go
 ```
 
-Exemplo:
+Para projetos de estudo, um nome simples também funciona:
 
 ```bash
 go mod init api-go
 ```
 
---------------------------------------------------
+## O arquivo go.mod
 
-# Arquivo go.mod
-
-Exemplo:
+O `go.mod` declara o caminho do módulo, a versão do Go e as dependências do projeto:
 
 ```go
-module api-go
+module github.com/usuario/api-go
 
-go 1.25
+go 1.22
+
+require github.com/gin-gonic/gin v1.10.0
 ```
 
---------------------------------------------------
+| Diretiva | O que significa |
+|---|---|
+| `module` | Caminho de importação do módulo |
+| `go` | Versão mínima do Go esperada pelo projeto |
+| `require` | Dependências e suas versões |
 
-# Instalando dependências
+!!! note
+    Você raramente edita o `go.mod` à mão. Os comandos `go get` e `go mod tidy` mantêm o arquivo atualizado automaticamente.
+
+## Adicionando dependências
+
+Use `go get` para baixar uma dependência e registrá-la no `go.mod`:
 
 ```bash
 go get github.com/gin-gonic/gin
 ```
 
-Importando no código:
+Depois, basta importá-la no código:
 
 ```go
 import "github.com/gin-gonic/gin"
 ```
 
---------------------------------------------------
+## Atualizando dependências
 
-# Atualizando dependências
+Para atualizar para as versões mais recentes compatíveis:
 
 ```bash
-go get -u
+# Atualiza uma dependência específica
+go get -u github.com/gin-gonic/gin
+
+# Atualiza todas as dependências do módulo
+go get -u ./...
 ```
 
---------------------------------------------------
+## Organizando com go mod tidy
 
-# Limpando dependências
+`go mod tidy` sincroniza o `go.mod` com o que o código realmente usa: adiciona o que está faltando e remove o que não é mais importado.
 
 ```bash
 go mod tidy
 ```
 
---------------------------------------------------
+## O arquivo go.sum
 
-# Arquivo go.sum
+O `go.sum` é gerado automaticamente e guarda os checksums (hashes) de cada dependência. Ele garante a **integridade** das versões baixadas — se um pacote for adulterado, o build falha. Os dois arquivos, `go.mod` e `go.sum`, devem ser versionados no Git.
 
-Responsável pela integridade das dependências.
+## Comandos úteis
 
---------------------------------------------------
+| Comando | O que faz |
+|---|---|
+| `go mod init <caminho>` | Cria o módulo e o arquivo `go.mod` |
+| `go get <pacote>` | Adiciona ou atualiza uma dependência |
+| `go mod tidy` | Adiciona dependências faltantes e remove as não usadas |
+| `go mod download` | Baixa as dependências para o cache local |
+| `go list -m all` | Lista o módulo e todas as suas dependências |
 
-# Baixando dependências
+## Exemplo completo
 
-```bash
-go mod download
-```
-
---------------------------------------------------
-
-# Listando módulos
-
-```bash
-go list -m all
-```
-
---------------------------------------------------
-
-# Exemplo completo
+Um servidor HTTP mínimo usando o framework `gin`, instalado via Go Modules:
 
 ```go
 package main
@@ -314,24 +97,22 @@ package main
 import "github.com/gin-gonic/gin"
 
 func main() {
-
     r := gin.Default()
 
     r.GET("/", func(c *gin.Context) {
         c.JSON(200, gin.H{
-            "mensagem": "Olá Go",
+            "mensagem": "Olá, Go!",
         })
     })
 
-    r.Run()
+    r.Run() // escuta em :8080 por padrão
 }
 ```
 
-==================================================
-CONCLUSÃO
-==================================================
+Para rodar o projeto a partir do zero:
 
-Go possui uma sintaxe simples e eficiente para trabalhar com estruturas de dados, organização de código e gerenciamento de dependências.
-
-Arrays, slices, maps, structs, métodos e Go Modules são conceitos fundamentais para qualquer desenvolvedor Go.
-
+```bash
+go mod init github.com/usuario/api-go
+go get github.com/gin-gonic/gin
+go run main.go
+```

@@ -32,8 +32,8 @@ func main() {
 }
 ```
 
-> [!NOTE]
-> Quando a função `main` termina, todas as goroutines são encerradas imediatamente, mesmo que ainda não tenham concluído. Por isso, o `time.Sleep` acima é apenas didático — na prática, usa-se `sync.WaitGroup` para aguardar goroutines corretamente.
+!!! note
+    Quando a função `main` termina, todas as goroutines são encerradas imediatamente, mesmo que ainda não tenham concluído. Por isso, o `time.Sleep` acima é apenas didático — na prática, usa-se `sync.WaitGroup` para aguardar goroutines corretamente.
 
 ---
 
@@ -61,8 +61,8 @@ func main() {
 }
 ```
 
-> [!WARNING]
-> Note o `i := i` dentro do loop. Sem essa cópia, todas as goroutines compartilhariam a mesma variável `i` do loop externo — uma race condition clássica. Ao capturar closures em goroutines, sempre crie uma cópia local das variáveis do loop.
+!!! warning
+    Note o `i := i` dentro do loop. Sem essa cópia, todas as goroutines compartilhariam a mesma variável `i` do loop externo — uma race condition clássica. Ao capturar closures em goroutines, sempre crie uma cópia local das variáveis do loop.
 
 ---
 
@@ -138,10 +138,12 @@ func main() {
 
 Sem o `sync.Mutex`, o resultado seria imprevisível — às vezes 998, às vezes 1000, dependendo do agendamento das goroutines.
 
-> [!NOTE]
-> Go possui uma ferramenta embutida para detectar race conditions em tempo de execução. Execute seu programa com a flag `-race` para ativá-la:
-> ```bash
-> go run -race main.go
-> go test -race ./...
-> ```
-> Use essa flag durante o desenvolvimento e nos testes — ela não deve ser usada em produção por ter overhead de desempenho.
+!!! note
+    Go possui uma ferramenta embutida para detectar race conditions em tempo de execução. Execute seu programa com a flag `-race` para ativá-la:
+
+    ```bash
+    go run -race main.go
+    go test -race ./...
+    ```
+
+    Use essa flag durante o desenvolvimento e nos testes — ela não deve ser usada em produção por ter overhead de desempenho.

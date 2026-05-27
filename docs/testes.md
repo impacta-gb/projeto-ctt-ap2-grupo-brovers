@@ -37,8 +37,8 @@ func Soma(a, b int) int {
 }
 ```
 
-> [!NOTE]
-> Arquivos `_test.go` são ignorados na compilação normal do projeto (`go build`). Eles só são incluídos quando você roda `go test`.
+!!! note
+    Arquivos `_test.go` são ignorados na compilação normal do projeto (`go build`). Eles só são incluídos quando você roda `go test`.
 
 ---
 
@@ -55,7 +55,7 @@ func Soma(a, b int) int {
 
 ### Exemplo de saída com `-v`
 
-```
+```text
 --- PASS: TestSoma (0.00s)
 --- FAIL: TestSubtrai (0.00s)
     matematica_test.go:18: Subtrai(5, 3) = 1; esperado 2
@@ -86,8 +86,8 @@ func TestDivisao(t *testing.T) {
 }
 ```
 
-> [!WARNING]
-> Prefira `t.Errorf` quando quiser continuar verificando outras condições no mesmo teste. Use `t.Fatalf` apenas quando uma falha impossibilita continuar (ex: retorno `nil` que seria desreferenciado em seguida).
+!!! warning
+    Prefira `t.Errorf` quando quiser continuar verificando outras condições no mesmo teste. Use `t.Fatalf` apenas quando uma falha impossibilita continuar (ex: retorno `nil` que seria desreferenciado em seguida).
 
 ---
 
@@ -124,8 +124,8 @@ func TestSomaTabela(t *testing.T) {
 }
 ```
 
-> [!NOTE]
-> `t.Run()` cria **subtestes** nomeados. Você pode rodar um caso específico com `go test -run TestSomaTabela/com_zero`. Os subtestes também aparecem individualmente no modo verboso (`-v`), facilitando identificar qual caso falhou.
+!!! note
+    `t.Run()` cria **subtestes** nomeados. Você pode rodar um caso específico com `go test -run TestSomaTabela/com_zero`. Os subtestes também aparecem individualmente no modo verboso (`-v`), facilitando identificar qual caso falhou.
 
 ### Vantagens do Table-Driven
 
@@ -153,8 +153,8 @@ go tool cover -html=coverage.out
 
 O comando `go tool cover -html=coverage.out` abre um navegador com o código colorido: verde para linhas cobertas, vermelho para não cobertas.
 
-> [!NOTE]
-> 100% de cobertura não significa 100% de qualidade. Cobertura alta é boa, mas o mais importante é que os casos relevantes (incluindo casos de erro e edge cases) sejam testados.
+!!! note
+    100% de cobertura não significa 100% de qualidade. Cobertura alta é boa, mas o mais importante é que os casos relevantes (incluindo casos de erro e edge cases) sejam testados.
 
 ---
 
@@ -175,12 +175,13 @@ go test -bench=. ./...
 ```
 
 Saída:
-```
+
+```text
 BenchmarkSoma-8    1000000000    0.3 ns/op
 ```
 
-> [!NOTE]
-> O `b.N` é ajustado automaticamente pelo runtime para que o benchmark rode por tempo suficiente. Nunca coloque um número fixo — deixe o Go determinar.
+!!! note
+    O `b.N` é ajustado automaticamente pelo runtime para que o benchmark rode por tempo suficiente. Nunca coloque um número fixo — deixe o Go determinar.
 
 ---
 
@@ -255,7 +256,7 @@ Rodando:
 go test -v -cover .
 ```
 
-```
+```text
 --- PASS: TestDividir (0.00s)
     --- PASS: TestDividir/divisão_normal (0.00s)
     --- PASS: TestDividir/divisão_com_float (0.00s)

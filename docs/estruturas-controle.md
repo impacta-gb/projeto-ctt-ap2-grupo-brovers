@@ -1,7 +1,10 @@
+# Estruturas de Controle
 
-## Estruturas de Controle
+Go oferece um conjunto minimalista de estruturas de controle de fluxo: `if`/`else`, um único tipo de loop (`for`) e um `switch` bastante flexível. Esta página mostra como cada uma funciona e as particularidades em relação a outras linguagens.
 
-### if / else
+---
+
+## if / else
 
 ```go
 package main
@@ -45,9 +48,10 @@ func main() {
 }
 ```
 
-> [!NOTE] Em Go não existe operador ternário (`condição ? a : b`). Use sempre `if/else` explicitamente — isso melhora a legibilidade.
+!!! note
+    Em Go não existe operador ternário (`condição ? a : b`). Use sempre `if/else` explicitamente — isso melhora a legibilidade.
 
-### for — o único loop em Go
+## for — o único loop em Go
 
 Go tem **apenas um** tipo de loop: o `for`. Mas ele é flexível o suficiente para substituir `while` e `do-while`:
 
@@ -102,14 +106,14 @@ func main() {
 }
 ```
 
-|Forma do `for`|Equivalente em outras linguagens|
+| Forma do `for` | Equivalente em outras linguagens |
 |---|---|
-|`for i := 0; i < n; i++`|`for` clássico (C, Java)|
-|`for condição { }`|`while`|
-|`for { }`|`while(true)` / loop infinito|
-|`for i, v := range x`|`foreach` / iterador|
+| `for i := 0; i < n; i++` | `for` clássico (C, Java) |
+| `for condição { }` | `while` |
+| `for { }` | `while(true)` / loop infinito |
+| `for i, v := range x` | `foreach` / iterador |
 
-### switch
+## switch
 
 O `switch` em Go é mais poderoso que em outras linguagens: **não precisa de `break`** (ele não "cai" para o próximo caso automaticamente) e pode comparar qualquer tipo:
 
@@ -172,7 +176,8 @@ func main() {
 }
 ```
 
-> [!WARNING] Se você **realmente** quiser que um caso "caia" para o próximo (comportamento padrão de C/Java), use a palavra-chave `fallthrough` explicitamente. Isso é incomum em Go e deve ser usado com cautela.
+!!! warning
+    Se você **realmente** quiser que um caso "caia" para o próximo (comportamento padrão de C/Java), use a palavra-chave `fallthrough` explicitamente. Isso é incomum em Go e deve ser usado com cautela.
 
 ```go
 switch x {

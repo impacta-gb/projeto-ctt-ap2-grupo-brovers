@@ -1,25 +1,25 @@
-# Fundamentos de Go
+# Introdução e Instalação
 
 Go (também chamado de Golang) é uma linguagem de programação de código aberto criada pelo Google em 2009. Ela foi projetada para ser simples, eficiente e segura, ideal para sistemas modernos que precisam de alto desempenho e concorrência.
 
 ---
 
-### O que é Go e por que usar?
+## O que é Go e por que usar?
 
 Go combina a velocidade de linguagens compiladas (como C) com a legibilidade de linguagens de alto nível (como Python). Alguns motivos para escolher Go:
 
-|Característica|Descrição|
+| Característica | Descrição |
 |---|---|
-|Compilação rápida|Gera binários nativos em segundos|
-|Tipagem estática|Erros de tipo são detectados em tempo de compilação|
-|Concorrência nativa|Goroutines e channels são parte da linguagem|
-|Garbage collector|Gerenciamento de memória automático, sem ponteiros manuais|
-|Biblioteca padrão|Rica e bem documentada, cobre HTTP, I/O, criptografia e muito mais|
-|Simplicidade|Poucas palavras-chave, fácil de aprender e manter|
+| Compilação rápida | Gera binários nativos em segundos |
+| Tipagem estática | Erros de tipo são detectados em tempo de compilação |
+| Concorrência nativa | Goroutines e channels são parte da linguagem |
+| Garbage collector | Gerenciamento de memória automático, sem ponteiros manuais |
+| Biblioteca padrão | Rica e bem documentada, cobre HTTP, I/O, criptografia e muito mais |
+| Simplicidade | Poucas palavras-chave, fácil de aprender e manter |
 
-### Como instalar
+## Como instalar
 
-#### Linux
+### Linux
 
 ```bash
 # Baixe o pacote oficial (substitua pela versão mais recente em https://go.dev/dl/)
@@ -37,7 +37,7 @@ source ~/.bashrc
 go version
 ```
 
-#### macOS
+### macOS
 
 ```bash
 # Com Homebrew
@@ -47,13 +47,14 @@ brew install go
 go version
 ```
 
-#### Windows
+### Windows
 
 Baixe o instalador `.msi` em [https://go.dev/dl/](https://go.dev/dl/) e siga o assistente de instalação. O `PATH` é configurado automaticamente.
 
-> [!NOTE] Após a instalação, execute `go version` no terminal para confirmar que tudo está correto. A saída esperada é algo como `go version go1.22.0 linux/amd64`.
+!!! note
+    Após a instalação, execute `go version` no terminal para confirmar que tudo está correto. A saída esperada é algo como `go version go1.22.0 linux/amd64`.
 
-### Primeiro programa: Hello, World!
+## Primeiro programa: Hello, World!
 
 Crie um arquivo chamado `main.go` com o seguinte conteúdo:
 
@@ -73,12 +74,9 @@ Para executar:
 go run main.go
 ```
 
-|Comando|O que faz|
+| Comando | O que faz |
 |---|---|
-|`go run`|Compila e executa o programa em uma única etapa|
-|`go build`|Compila e gera um binário executável|
-|`go fmt`|Formata o código seguindo o estilo oficial do Go|
-|`go vet`|Analisa o código em busca de erros comuns|
-
----
-
+| `go run` | Compila e executa o programa em uma única etapa |
+| `go build` | Compila e gera um binário executável |
+| `go fmt` | Formata o código seguindo o estilo oficial do Go |
+| `go vet` | Analisa o código em busca de erros comuns |
